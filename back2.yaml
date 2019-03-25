@@ -29,7 +29,7 @@ kind: Ingress
 metadata:
   name: back2
   annotations:
-    kubernetes.io/ingress.class: "nginx-ingress-public"
+    kubernetes.io/ingress.class: "nginx-ingress-secure"
 spec:
   rules:
   - host: back2.kubernetes.local
