@@ -1,0 +1,14 @@
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: back2
+  annotations:
+    kubernetes.io/ingress.class: "nginx-ingress-secure"
+spec:
+  rules:
+  - host: back2.kubernetes.local
+    http:
+      paths:
+      - backend:
+          serviceName: back2
+          servicePort: 80
