@@ -4,6 +4,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: back1
+  namespace: public
   labels:
     app: back1
 spec:
@@ -28,6 +29,7 @@ apiVersion: extensions/v1beta1
 kind: Ingress
 metadata:
   name: back1
+  namespace: public
   annotations:
     kubernetes.io/ingress.class: "nginx-ingress-public"
 spec:
@@ -45,6 +47,7 @@ kind: Service
 apiVersion: v1
 metadata:
   name: back1
+  namespace: public
 spec:
   selector:
     app: back1

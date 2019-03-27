@@ -1,0 +1,17 @@
+---
+
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: public
+  labels:
+    name: public
+
+---
+
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: secure
+  labels:
+    name: secure
