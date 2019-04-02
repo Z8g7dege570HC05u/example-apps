@@ -1,0 +1,14 @@
+---
+
+kind: Service
+apiVersion: v1
+metadata:
+  name: {{ app_name }}
+  namespace: {{ k8s_namespace }}
+spec:
+  selector:
+    app: {{ app_name }}
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 80

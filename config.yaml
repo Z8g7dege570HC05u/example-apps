@@ -1,0 +1,69 @@
+---
+
+common:
+  k8s_namespace: test-namespace
+
+  app_name: test-app
+  app_domain: test.example.com
+  ingress_class: external-ingress
+  certificate: {}
+
+  templates:
+    - template: 000_namespaces.yaml.j2
+    - template: 010_deployment.yaml.j2
+    - template: 020_service.yaml.j2
+    - template: 030_ingress.yaml.j2
+
+
+# Simple apps
+secure:
+  k8s_namespace: secure
+  app_name: secure-app
+  app_domain: secure.example.com
+  ingress_class: kube-ingress
+
+
+public:
+  k8s_namespace: public
+  app_name: public-app
+  app_domain: public.example.com
+
+
+# Apps with certificates
+
+secure_cert:
+  k8s_namespace: secure-cert
+  app_name: secure-cert-app
+  app_domain: secure-cert.example.com
+  ingress_class: kube-ingress
+
+  certificate:
+    altNames: []
+    provider: eu-central-1-zones
+    issuerRef:
+      name: letsencrypt-staging
+
+  templates:
+    - template: 000_namespaces.yaml.j2
+    - template: 010_deployment.yaml.j2
+    - template: 020_service.yaml.j2
+    # - template: 025_certificate.yaml.j2
+    - template: 030_ingress.yaml.j2
+
+public_cert:
+  k8s_namespace: public-cert
+  app_name: public-cert-app
+  app_domain: public-cert.example.com
+
+  certificate:
+    altNames: ["www.public-cert.example.com"]
+    provider: eu-central-1-zones
+    issuerRef:
+      name: letsencrypt-staging
+
+  templates:
+    - template: 000_namespaces.yaml.j2
+    - template: 010_deployment.yaml.j2
+    - template: 020_service.yaml.j2
+    # - template: 025_certificate.yaml.j2
+    - template: 030_ingress.yaml.j2
