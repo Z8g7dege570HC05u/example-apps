@@ -1,0 +1,26 @@
+---
+
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: {{ app_name }}
+  namespace: {{ k8s_namespace }}
+  annotations:
+    kubernetes.io/ingress.class: "{{ ingress_class }}"
+spec:
+  {% if certificate %}
+  tls:
+    - hosts:
+        - {{ app_domain }}
+        {% for altNames in certificate.altNames -%}
+        - {{ altNames }}
+        {%- endfor %}
+      secretName: "{{ app_name }}-tls"
+  {% endif %}
+  rules:
+    - host: "{{ app_domain }}"
+      http:
+        paths:
+          - backend:
+              serviceName: {{ app_name }}
+              servicePort: 80

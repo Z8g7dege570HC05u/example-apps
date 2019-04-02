@@ -1,0 +1,28 @@
+---
+
+apiVersion: certmanager.k8s.io/v1alpha1
+kind: Certificate
+metadata:
+  name: {{ app_name }}
+  namespace: {{ k8s_namespace }}
+spec:
+  secretName: {{ app_name }}-tls
+  renewBefore: 360h # 15d
+  commonName: {{ app_domain }}
+  dnsNames:
+    - {{ app_domain }}
+    {% for altNames in certificate.altNames -%}
+    - {{ altNames }}
+    {%- endfor %}
+  acme:
+    config:
+      - dns01:
+          provider: {{ certificate.provider }}
+        domains:
+          - {{ app_domain }}
+          {% for altNames in certificate.altNames -%}
+          - {{ altNames }}
+          {%- endfor %}
+  issuerRef:
+    name: {{ certificate.issuerRef.name }}
+    kind: ClusterIssuer
